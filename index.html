@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Password Generator</title>
+    
+    <link rel="stylesheet" href="style.css" />
+
+   
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Password Generator</h1>
+      </header>
+      <div class="card">
+        <div class="card-header">
+          <h2>Generate a Password</h2>
+        </div>
+        <div class="card-body">
+          <textarea
+            readonly
+            id="password"
+            placeholder="Your Secure Password"
+            aria-label="Generated Password"
+          ></textarea>
+        </div>
+        <div class="card-footer">
+          <button id="generate" class="btn">Generate Password</button>
+        </div>
+       
+        </div>
+      </div>     
+    </div>
+
+    <div id="prompt-criteria" class="prompt-criteria" style="display:none" aria-modal="true"> 
+      <h2>Choose the criteria to generate the password</h2> 
+       <p >Password length</p>
+        <textarea id = "pwdlen" placeholder="type length between 8 - 128. Ex: 8 or 10 or 52 " ></textarea>
+          <p>Include lower case characters?<input type="hidden" id="lower"></p>
+          <p>
+            <button id="btn-lower-yes" class="btn btn-yes btnclear" value="lower-yes">&#10003</button>
+            <button id="btn-lower-no" class="btn btnclear" value="lower-no">&#215</button>
+          </p>
+          <!-- <textarea
+              <!--<textarea
+            id = "pwdupper" placeholder="A - Z" ></textarea>-->
+          <p >Include upper case characters?<input type="hidden" id="upper"></p>
+          <p>
+            <button id="btn-upper-yes" class="btn btn-yes btnclear" value="upper-yes">&#10003</button>
+            <button id="btn-upper-no" class="btn btnclear" value="upper-no">&#215</button>
+         </p>
+
+          <p >Include numeric characters?<input type="hidden" id="num"></p>
+           <!-- <textarea
+            id = "pwdnumeric" placeholder="digits 0  9" ></textarea>-->
+            <p>
+            <button id="btn-num-yes" class="btn btn-yes btnclear" value="num-yes">&#10003</button>
+            <button id="btn-num-no" class="btn btnclear"  value="num-no">&#215</button>
+          </p>
+
+            <p >Include special characters?<input type="hidden" id="special"></p>
+            <p>  
+            <!--<textarea
+            id = "pwdspecial" placeholder=". \ + * ? [ ^ ] $ ( ) { } = ! < > | : -" ></textarea>-->
+            <button id="btn-special-yes" class="btn btn-yes btnclear" value="special-yes" >&#10003</button>
+            <button id="btn-special-no" class="btn btnclear" value="special-no" >&#215</button>
+          </p>
+            <p><button id="btn-submit" class="btn">Submit</button></p>
+     
+         
+         
+
+    </div>
+    
+    <script src="script.js"></script>
+  </body>
+</html>
