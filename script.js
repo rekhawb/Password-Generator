@@ -1,54 +1,50 @@
 // Assignment Code
-var generateBtn = document.querySelector("#generate");
+//Fetch DOM elements into a object. So that the objects key values can be used whereever necessary.
 
-var btnSubmit = document.querySelector("#btn-submit");
+var btnObjects = {
 
-var txtPwdLen = document.querySelector("#pwdlen");
+  generateBtn             : document.querySelector("#generate"),
+  btnSubmit                : document.querySelector("#btn-submit"),
+  parentDiv                 :document.querySelector("#prompt-criteria"),
+  txtPwdLen                : document.querySelector("#pwdlen"),  
+  inptUpper                 : document.querySelector("#upper").value, 
+  inptLower                 : document.querySelector("#lower").value,
+  inptNum                   : document.querySelector("#num").value,
+  inptSpl                      : document.querySelector("#special").value,
+  dialogoverlay           :document.querySelector("#prompt-criteria"),
+  dialogunder             :document.querySelector(".wrapper"),
+  passwordText          : document.querySelector("#password"),
+ 
+ btnReset                   :function() { 
+   
+                                                      document.querySelector("#btn-lower-yes").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-lower-no").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-upper-yes").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-upper-no").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-num-yes").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-num-no").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-special-yes").setAttribute('style','width:10% , transition: width 10s');
+                                                      document.querySelector("#btn-special-no").setAttribute('style','width:10% , transition: width 10s');
+ } ,
 
-var btnUpperYes = document.querySelector("#btn-upper-yes");
+ inptBlanks                                 :function(){
+                                                                          btnObjects.txtPwdLen.value = '';
 
-var btnUpperNo = document.querySelector("#btn-upper-no");
+                                                                            }
+ }
 
-var inptUpper = document.querySelector("#upper");
-
-var btnLowerYes = document.querySelector("#btn-lower-yes");
-
-var btnLowerNo = document.querySelector("#btn-lower-no");
-
-var inptLower = document.querySelector("#lower");
-
-var btnNumYes = document.querySelector("#btn-num-yes");
-
-var btnNumNo = document.querySelector("#btn-num-no");
-
-var inptNum = document.querySelector("#num");
-
-var btnSplYes = document.querySelector("#btn-special-yes");
-
-var btnSplNo = document.querySelector("#btn-special-no");
-
-var inptSpl = document.querySelector("#special");
-
+//Define a string with criteria. Make sure it has spaces after each criteria so that it can be split as required
 var pwdChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 ./+*?[^]$(){}=!<>|:-';
 
-var btnValue='';
-
-var dialogoverlay = document.getElementById('prompt-criteria');
-
-var dialogunder = document.querySelector(".wrapper");
-
-var passwordText = document.querySelector("#password");
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Display customized prompt window 
 
 // Write password to the #password input
 function writePassword() {
 
-  
+  btnObjects.dialogoverlay.setAttribute("style", "display:inline-block;position:fixed; top:0%; left:15%;margin-left:5%;padding:2%;min-height:100%; width:auto;overflow-y:scroll;overflow-x:hidden;background-color:rgba(0,0,0,.5);color:white;border: 3px dashed rgba(43, 9, 240, 0.671 ");
 
- dialogoverlay.setAttribute("style", "display:inline-block;position:fixed; top:0%; left:15%;margin-left:5%;padding:2%;height:70%; width:auto;overflow-y:scroll;overflow-x:hidden;background-color:rgba(0,0,0,.5);color:white;border: 3px dashed rgba(43, 9, 240, 0.671 ");
-
- /*document.getElementById("prompt-criteria").*/
- dialogoverlay.animate([
+  btnObjects.dialogoverlay.animate([
   // keyframes
   { transform: 'translateY(0px)' },
   { transform: 'translateY(-100px)' }
@@ -58,104 +54,82 @@ function writePassword() {
   iterations:0.5,
 });
 
-    dialogunder.setAttribute("style","opacity:0.1");
-
-    txtPwdLen.value = '';
-    inptUpper.value = '';
-    inptLower.value = '';
-    inptNum.value = '';
-    inptSpl.value = '';
-
-    /*btnUpperYes.setAttribute("style","width:10%");*/
- /*
- var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;*/
-
+btnObjects.dialogunder.setAttribute("style","opacity:0.1");
 
 }
 
-function btnWidthIncr(btnName){
-  btnName.setAttribute("style", "width:30% ; border-bottom: 4px solid blue;transition: all 0.5s ease-in-out;");
-  btnValue = btnName.value;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// This function is helpful to change button appearance after click
+
+function widthIncrDecr(btn1,btn2){
+
+  btn1.setAttribute("style", "width:30% ; border-bottom: 4px solid blue;transition: all 0.5s ease-in-out;");
+
+  btn2.setAttribute("style", "width:5% ");
+
 }
 
-
-function btnWidthDecr(btnName){
-  btnName.setAttribute("style", "width:5% ");
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+btnObjects.generateBtn.addEventListener("click", writePassword);
 
-btnSubmit.addEventListener("click", generatePassword);
+btnObjects.btnSubmit.addEventListener("click", generatePassword);
 
-
+// check if the  password length entered matches 8-128 characters and atleast one password criteria is selected
 document.addEventListener('click', (e) => {
     let element = e.target;
-   
-
-    if(element.tagName == "BUTTON"){   
-       if(element.id == 'btn-upper-yes'){
-        btnWidthIncr(btnUpperYes);
-        btnWidthDecr(btnUpperNo);
-        inptUpper.value = pwdChar.split(' ')[0];
+  
+       if(element.matches('#btn-upper-yes')) {
+        widthIncrDecr(element,element.nextElementSibling);
+        btnObjects.inptUpper = pwdChar.split(' ')[0];
        }
        
-       else if(element.id == 'btn-upper-no'){
-        btnWidthIncr(btnUpperNo);
-        btnWidthDecr(btnUpperYes);
-        inptUpper.value='';
-        
+       else if(element.matches('#btn-upper-no')){
+        widthIncrDecr(element,element.previousElementSibling);
+        btnObjects.inptUpper='';        
        }
        
-       else if(element.id == 'btn-lower-yes'){
-        btnWidthIncr(btnLowerYes);
-        btnWidthDecr(btnLowerNo);
-        inptLower.value = pwdChar.split(' ')[1];
+       else if(element.matches('#btn-lower-yes')){
+        widthIncrDecr(element,element.nextElementSibling);
+        btnObjects.inptLower = pwdChar.split(' ')[1];
        }
        
-       else if(element.id == 'btn-lower-no'){
-        btnWidthIncr(btnLowerNo);
-        btnWidthDecr(btnLowerYes);
-        inptLower.value='';
-        
+       else if(element.matches('#btn-lower-no')){
+        widthIncrDecr(element,element.previousElementSibling);
+        btnObjects.inptLower='';        
        }
        
-       else if(element.id == 'btn-num-yes'){
-        btnWidthIncr(btnNumYes);
-        btnWidthDecr(btnNumNo);
-        inptNum.value = pwdChar.split(' ')[2];
+       else if(element.matches('#btn-num-yes')){
+        widthIncrDecr(element,element.nextElementSibling);
+        btnObjects.inptNum = pwdChar.split(' ')[2];
        }
        
-       else if(element.id == 'btn-num-no'){
-        btnWidthIncr(btnNumNo);
-        btnWidthDecr(btnNumYes);
-        inptNum.value='';
+       else if(element.matches('#btn-num-no')){
+        widthIncrDecr(element,element.previousElementSibling);
+        btnObjects.inptNum='';
        }
        
-       else if(element.id == 'btn-special-yes'){
-        btnWidthIncr(btnSplYes);
-        btnWidthDecr(btnSplNo);
-       inptSpl.value = pwdChar.split(' ')[3];
+       else if(element.matches('#btn-special-yes')){
+        widthIncrDecr(element,element.nextElementSibling);
+        btnObjects.inptSpl = pwdChar.split(' ')[3];
        }
        
-       else if(element.id == 'btn-special-no'){
-        btnWidthIncr(btnSplNo);
-        btnWidthDecr(btnSplYes);
-        inptSpl.value = '';
+       else if(element.matches('#btn-special-no')){
+        widthIncrDecr(element,element.previousElementSibling);
+        btnObjects.inptSpl = '';
        }
-   
-  }
+ 
     }
 );
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//password characters are extracted from the password string "pwdChar" (defined in earlier sections) based on what criteria is selected.
 
 function generatePassword(){
 
-  var pwdCharacters = inptUpper.value+inptLower.value+inptNum.value+inptSpl.value;
-
+  var pwdCharacters = btnObjects.inptUpper+btnObjects.inptLower+btnObjects.inptNum+btnObjects.inptSpl;
+  
   var pwdLength = document.querySelector("#pwdlen").value;
 
   var result = '';
@@ -175,9 +149,9 @@ alert(pwdCharacters);*/
  
   alert(result);
 
-  dialogunder.setAttribute("style","opacity:1");
+  btnObjects.dialogunder.setAttribute("style","opacity:1");
 
-  dialogoverlay.animate([
+  btnObjects.dialogoverlay.animate([
     // keyframes
     { transform: 'translateY(0px)' },
     { transform: 'translateY(-100px)' }
@@ -187,25 +161,18 @@ alert(pwdCharacters);*/
     iterations:0.5,
   });
 
-  dialogoverlay.setAttribute("style","display:none");
+// prompt window is hidden. Main window is displayed with the password in the text box. Reset prompt window's button width and text area value.
 
-  passwordText.value = result;
+  btnObjects.dialogoverlay.setAttribute("style","display:none");
 
-  btnUpperYes.setAttribute('style','width:10% , transition: width 10s');
 
-  btnUpperNo.setAttribute('style','width:10% , transition: width 10s');
+  btnObjects.passwordText.value = result;
 
-  btnLowerYes.setAttribute('style','width:10% , transition: width 10s');
 
-  btnLowerNo.setAttribute('style','width:10% , transition: width 10s');
-
-  btnNumYes.setAttribute('style','width:10% , transition: width 10s');
-
-  btnNumNo.setAttribute('style','width:10% , transition: width 10s');
-
-  btnSplYes.setAttribute('style','width:10% , transition: width 10s');
-
-  btnSplNo.setAttribute('style','width:10% , transition: width 10s');
+  
+  btnObjects.inptBlanks();
+  btnObjects.btnReset();
+  
 
 }
 
