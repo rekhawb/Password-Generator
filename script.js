@@ -147,7 +147,7 @@ function generatePassword(){
 alert(pwdCharacters);*/
  result =  Array(parseInt(pwdLength)).fill(pwdCharacters).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
  
-  alert(result);
+  //alert(result);
 
   btnObjects.dialogunder.setAttribute("style","opacity:1");
 
